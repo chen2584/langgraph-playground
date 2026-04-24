@@ -35,15 +35,16 @@ def should_continue(state: MessagesState):
         return END
     return REFLECT
 
-
-graph.add_conditional_edges(GENERATE, should_continue)
+# path_map is not necessary here since we are using the same state variable names across nodes, but it's included for clarity and to show how you can map different variable names if needed.
+# in newer versions of langgraph, the path_map can be inferred automatically if the variable names match across nodes
+graph.add_conditional_edges(GENERATE, should_continue, {REFLECT: REFLECT, END: END})
 graph.add_edge(REFLECT, GENERATE)
 
 app = graph.compile()
 
 # For debugging, you can visualize the graph structure
-# print(app.get_graph().draw_mermaid())
-# app.get_graph().print_ascii()
+print(app.get_graph().draw_mermaid())
+app.get_graph().print_ascii()
 
 response = app.invoke({"messages": [HumanMessage(content="AI Agents taking over content creation")]})
 
