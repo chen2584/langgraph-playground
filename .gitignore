@@ -29,3 +29,5 @@ htmlcov/
 # Ignore Python compiled files
 *.pyo
 *.pyd
+
+__pycache__
