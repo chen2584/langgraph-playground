@@ -29,7 +29,7 @@ def execute_tools(state: List[BaseMessage]) -> List[BaseMessage]:
                 query_results[query] = result
             
             # Create a tool message with the results
-            tool_messages.append(
+            tool_messages.append( # We can even return imediately after the first tool call
                 ToolMessage(
                     content=json.dumps(query_results),
                     tool_call_id=call_id

@@ -8,10 +8,6 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-pydantic_parser = PydanticToolsParser(tools=[AnswerQuestion])
-
-parser = JsonOutputToolsParser(return_id=True)
-
 # Actor Agent Prompt 
 actor_prompt_template = ChatPromptTemplate.from_messages(
     [
@@ -38,7 +34,7 @@ first_responder_prompt_template = actor_prompt_template.partial(
 
 llm = ChatGoogleGenerativeAI(model="gemini-2.5-flash")
 
-first_responder_chain = first_responder_prompt_template | llm.bind_tools(tools=[AnswerQuestion], tool_choice='AnswerQuestion') | pydantic_parser
+first_responder_chain = first_responder_prompt_template | llm.bind_tools(tools=[AnswerQuestion], tool_choice='AnswerQuestion')
 
 validator = PydanticToolsParser(tools=[AnswerQuestion])
 
